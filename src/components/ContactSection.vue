@@ -1,6 +1,5 @@
 <template>
     <div id="contact">
-      <!-- Upper Part: Full-width frame with padding and height of 1/4 screen -->
       <v-container fluid class="contact-container">
         <v-row>
           <v-col cols="12">
@@ -9,8 +8,6 @@
             </div>
           </v-col>
         </v-row>
-  
-        <!-- Lower Part: Social Media, Number, and Address -->
         <v-row>
           <v-col cols="12" md="4" class="contact-info">
             <h3>Get in touch with:</h3>
@@ -30,28 +27,21 @@
       </v-container>
     </div>
   </template>
-  
-  
   <script>
   export default {
     name: 'ContactSection',
   };
   </script>
-  
   <style scoped>
-  /* Container for the contact section */
   .contact-container {
     padding: 0;
     background: radial-gradient(circle, #7e1166, #3f0152ee);
-
   }
-  
-  /* Frame for the upper part of the contact section */
-  .contact-frame {
-    background-color: #7b2cbf; /* You can change this color */
-    background-image: url('@/assets/image.png'); /* Replace with your image path */
-    background-size: cover; /* Ensures the image covers the entire frame */
-    background-position: center center; /* Centers the background image */
+    .contact-frame {
+    background-color: #7b2cbf; 
+    background-image: url('@/assets/image.png');
+    background-size: cover; 
+    background-position: center center; 
     color: white;
     width:90%;
     height: 30vh; 
@@ -61,50 +51,42 @@
     margin-left: 6%;
     margin-top: 10%;
     margin-bottom: 10%;
-    border-radius: 10px; /* Optional rounded corners */
+    border-radius: 10px;
   }
-  
-  /* Header inside the frame */
-  .contact-header {
+    .contact-header {
     font-size: 36px;
     font-weight: bold;
     text-align: center;
     text-shadow: 0 0 20px rgb(253, 5, 199);
- 
+
   }
-  
-  /* Styling for the contact info section */
- 
+
   .contact-info {
     text-align: center;
     padding-bottom: 5%;
     color: antiquewhite;
     transform: translateY(-50px);
 }
-  
+
   .contact-info h3 {
     font-size: 24px;
     margin-bottom: 25px;
     font-weight: bold;
   }
-  
-  /* Social media buttons */
-  .social-btn {
-    background-color: #ff79c6; /* Social media button color */
+    .social-btn {
+    background-color: #ff79c6;
     color: white;
     margin-right: 1%;  
     margin-left: 2%; 
     font-weight: bold;
   }
-  
+
   .social-btn:hover {
-    background-color: #7b2cbf; /* Hover effect for buttons */
+    background-color: #7b2cbf; 
   }
-  
-  /* Responsive adjustments */
-  @media (max-width: 600px) {
+    @media (max-width: 600px) {
     .contact-frame {
-      height: 30vh; /* Adjust frame height for smaller screens */
+      height: 30vh; 
     }
   }
   </style>

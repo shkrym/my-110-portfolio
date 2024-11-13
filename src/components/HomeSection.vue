@@ -11,15 +11,16 @@
           <li><a href="#contact" class="nav-item" :class="{ pressed: activeNav === 'Contact' }" @click="setActive('Contact')">Contact</a></li>
         </ul>
 
-      <!-- Mobile Toggle Button -->
-      <v-btn 
-          icon 
-          class="hidden-md-and-up" 
-          @click="drawer = !drawer"
-          style="transition: transform 0.3s ease-in-out;"
-          @mouseover="hover = true" 
-          @mouseleave="hover = false">
-          <v-icon :color="hover ? 'pink' : 'white'">mdi-menu</v-icon>
+        <!-- Mobile Toggle Button -->
+        <v-btn
+          icon
+          class="hidden-md-and-up"
+          @click="toggleDrawer"
+          :style="{ color: hover ? 'pink' : 'white' }"
+          @mouseover="hover = true"
+          @mouseleave="hover = false"
+        >
+          <v-icon>mdi-menu</v-icon>
         </v-btn>
       </div>
     </nav>
@@ -32,17 +33,28 @@
       right
       width="250"
       class="hidden-md-and-up"
-      style="transition: transform 0.3s ease-in-out;"
-      :style="drawer ? { transform: 'translateX(0)' } : { transform: 'translateX(100%)' }"
+      style="background-color: #1e1e1e;"
     >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in links"
-          :key="i"
-          @click="drawer = false; setActive(item.title)"
-          class="drawer-item"
-        >
-          <v-list-item-title class="drawer-item-title">{{ item.title }}</v-list-item-title>
+    <v-list>
+        <v-list-item>
+          <v-list-item-title>
+            <a href="#home" class="nav-item">Home</a>
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-title>
+            <a href="#about" class="nav-item">About</a>
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-title>
+            <a href="#services" class="nav-item">Services</a>
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-title>
+            <a href="#contact" class="nav-item">Contact</a>
+          </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -52,28 +64,28 @@
         <v-row>
           <v-col cols="12" md="6" class="left-column">
             <div class="content-wrapper">
-              <h1 >Welcome to my Portfolio!</h1>
-              <p> Dive in and get to know more about me, my Skills, and Services.</p>
+              <h1>Welcome to my Portfolio!</h1>
+              <p>Dive in and get to know more about me, my Skills, and Services.</p>
             </div>
           </v-col>
-     <v-col  class="right-column">
-       <img :src="giphyImage" alt="Animated GIF" class="giphy-image" />
-     </v-col>
+          <v-col class="right-column">
+            <img :src="giphyImage" alt="Animated GIF" class="giphy-image" />
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
   </div>
 </template>
+
 <script>
 import giphyImage from '@/assets/giphy.webp';
 
 export default {
-  name: 'PortfolioComponent',
   data() {
     return {
       drawer: false,
       activeNav: 'Home',
-      giphyImage, 
+      giphyImage,
       links: [
         { title: 'Home' },
         { title: 'About' },
@@ -83,29 +95,35 @@ export default {
     };
   },
   methods: {
+    toggleDrawer() {
+      this.drawer = !this.drawer;
+    },
     setActive(nav) {
       this.activeNav = nav;
-      if (nav === 'Home') {
-        this.scrollToTop();
-      }
+      this.scrollToSection(nav.toLowerCase());
     },
-    scrollToTop() {
-      const element = document.getElementById('home');
-      if (element) {
-        window.scrollTo({
-          top: element.offsetTop - 60, // Adjust for navbar height
-          behavior: "smooth",
-        });
-      }
-    }
+    handleDrawerNavigation(section) {
+      this.drawer = false; 
+      this.setActive(section); 
+    },
+    scrollToSection(id) {
+  const element = document.getElementById(id);
+  if (element) {
+    window.scrollTo({
+      top: element.offsetTop - document.querySelector('.navbar').offsetHeight, // Subtract navbar height
+      behavior: 'smooth',
+    });
   }
+}
+
+  },
 };
 </script>
+
 <style scoped>
 html {
   scroll-behavior: smooth;
 }
-
 
 .app-background {
   background: url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2xudGdnOThpbXF6MnlvaDE1ZzM0dzZlNmthNnhkd2dsbzY0MnozaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/lnfzT3k8g7wpG/giphy.gif') no-repeat center center fixed;
@@ -124,7 +142,6 @@ html {
   right: 0;
   z-index: 1000;
   padding: 0 20px;
-  height: 60px;
 }
 .brand-name {
   font-size: 24px;
@@ -135,6 +152,7 @@ html {
   justify-content: space-between;
   align-items: center;
   padding-top: 1%;
+
 }
 .nav-list {
   display: flex;
@@ -157,7 +175,7 @@ html {
 }
 /* Mobile Toggle Button Effects */
 .v-btn.icon {
-  color: #fff;
+  color: #0e0d0db7;
   transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
@@ -170,15 +188,16 @@ html {
 }
 
 .v-icon[color='pink'] {
-  color: #ff497c; /* Pink color when hovered */
+  color: #ff497c; 
 }
 
 /* Mobile Drawer */
 .v-navigation-drawer {
-  background: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
-  color: #fff; /* White text for the drawer items */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-  padding-top: 60px; /* Adjust top padding to avoid covering content */
+  background: rgba(0, 0, 0, 0.7); 
+  color: #fff; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  padding-top: 60px; 
+  
 }
 
 .drawer-item {
@@ -186,24 +205,16 @@ html {
 }
 
 .drawer-item:hover {
-  background-color: rgba(255, 79, 124, 0.2); /* Hover effect with pink color */
+  background-color: rgba(255, 79, 124, 0.2); 
 }
-
 .drawer-item-title {
-  font-size: 20px; /* Larger font size for better readability */
+  font-size: 20px;
   font-weight: bold;
   color: #fff;
   padding: 10px;
 }
-
-/* Optional: Darken the drawer when opened */
 .v-navigation-drawer--open {
   background-color: rgba(0, 0, 0, 0.8);
-}
-
-.home-container{
-      transform: translateY(-13%);
-      padding-top: 19%;
 }
 .left-column {
   display: flex;
@@ -212,17 +223,19 @@ html {
   text-align: center;
   height: 100%;
   flex-direction: column; 
+  transform: translateY(-30%);
 }
 .content-wrapper {
-  max-width: 80%;
-  text-align: center;
+     height: auto;
+     padding-bottom: 10%;
+     transform: translateY(25%);
+
 }
 .left-column h1 {
   color: #e0b3ff;
   font-size: 60px;
   font-weight: bold;
-  margin-bottom: 3%;
-  transform: translateY(-30px);
+  margin-bottom: 10%;
   text-shadow: 0 0 10px #ff79c6;
   animation: glitch 1.5s infinite;
 }
@@ -231,6 +244,7 @@ html {
   font-size: 25px;
   padding-bottom: 2%;
   transform: translateY(-30px);
+  margin-bottom: 10%;
 }
 @keyframes glitch {
   0% { text-shadow: 2px 2px #ff497c, -2px -2px #7b2cbf;}
@@ -247,13 +261,11 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   margin-bottom: 100%;
   flex-direction: column;
   opacity: 0.9;
   animation: fadeIn 3s ease-in-out;
   transform: translateY(-15%);
-
 }
 .giphy-image {
   max-width: 300px; 
